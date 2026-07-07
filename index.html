@@ -83,6 +83,8 @@
           <li><b>Provides reasoning or conceptual context</b> — connect the answer to the underlying principle.</li>
           <li><b>Is substantive</b> — more than a single generic sentence.</li>
           <li><b>Adds something new</b> — doesn't merely restate the question or repeat the correct option.</li>
+          <li><b>Addresses the wrong options</b> — for multiple-choice items, generally explain <em>why the incorrect answers are incorrect</em>, not just why the right one is right.</li>
+          <li><b>Names options by content, not position</b> — never say “Option 1”, “the first option”, or “choice B”. Answer options may be <em>shuffled</em> when displayed, so a positional reference can point at the wrong answer.</li>
           <li><b>Is complete and clean</b> — not cut off mid-sentence, free of copy-paste artifacts.</li>
         </ul>
 
@@ -111,6 +113,18 @@
             <p class="ex-q">Q: A hash table offers what average-case lookup time?</p>
             <p class="ex-e">“O(1) on average, because the hash function maps a key directly to its bucket, so lookup time doesn't depend on how many items are stored — you jump straight to the location instead of scanning. Heavy collisions can degrade this toward O(n), which is why the hash function and load factor matter.”</p>
             <p class="ex-note">Gives the reason, the trade-off, and when it breaks down.</p>
+          </div>
+          <div class="example bad">
+            <div class="ex-head"><span class="pill bad">Weak</span> Positional labels + ignores wrong options</div>
+            <p class="ex-q">Q: Which planet is closest to the Sun?</p>
+            <p class="ex-e">“Option 2 is correct. The first and last options are wrong.”</p>
+            <p class="ex-note">Options may be shuffled, so “Option 2” can point at the wrong answer — and it never says <em>why</em> the others are wrong.</p>
+          </div>
+          <div class="example good">
+            <div class="ex-head"><span class="pill good">Strong</span> Names options by content, addresses distractors</div>
+            <p class="ex-q">Q: Which planet is closest to the Sun?</p>
+            <p class="ex-e">“Mercury is closest because it has the smallest orbital radius. Venus is farther out despite being hotter (its thick atmosphere traps heat), and Earth and Mars are farther still — so none of those can be the closest.”</p>
+            <p class="ex-note">Refers to each option by name and explains why the distractors fail.</p>
           </div>
         </div>
         <p class="muted small">Tip: paste either example into the checker below to see how it scores.</p>
