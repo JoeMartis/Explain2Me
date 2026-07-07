@@ -1,6 +1,6 @@
-# Explainiac — Explanation Writing Trainer
+# Explainiac — Explanation Feedback
 
-A small, static web app that **trains module authors to write problem explanations that teach** — the worked rationales that accompany quiz/problem items. Authors practice on their real items: paste a draft, get instant rubric feedback and an AI verdict, revise, re-check, and compare against an example rewrite. Batch mode doubles as a QA sweep over a whole item set before publishing.
+A small, static web app that gives **instant feedback on problem explanations** — the worked rationales that accompany quiz/problem items. Paste a draft, see which rubric criteria it hits, get an AI verdict and an example rewrite, revise, and re-check. Batch mode sweeps a whole item set before publishing.
 
 > Hosted from the `JoeMartis/Explain2Me` repository; the app itself is branded **Explainiac**.
 

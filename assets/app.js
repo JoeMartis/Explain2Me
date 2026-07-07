@@ -811,7 +811,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   }
 
   // ---------- Boot ----------
-  // Training guide: open on first visit, then remember the user's choice.
+  // Guide: open on first visit, then remember the user's choice.
   function initGuide() {
     const guide = $("guide");
     if (localStorage.getItem(LS.guide) === "closed") guide.open = false;
