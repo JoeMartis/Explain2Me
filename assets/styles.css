@@ -140,7 +140,10 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .ex-tag.good { color: var(--good); background: var(--good-bg); }
 .ex-body { min-width: 0; }
 .ex-e { font-size: .95rem; margin: 0 0 5px; line-height: 1.55; }
-.ex-note { font-size: .84rem; color: var(--muted); margin: 0; font-style: italic; }
+.ex-note { font-size: .9rem; color: var(--text); margin: 9px 0 0; padding-top: 9px; border-top: 1px dashed var(--border); line-height: 1.5; }
+.ex-note::before { font-weight: 800; letter-spacing: .01em; }
+.ex-line.bad .ex-note::before { content: "Why it's weak — "; color: var(--bad); }
+.ex-line.good .ex-note::before { content: "Why it's strong — "; color: var(--good); }
 @media (max-width: 520px) {
   .ex-line { flex-direction: column; gap: 8px; }
 }
