@@ -182,6 +182,11 @@
         </label>
         <p class="muted small field-help">Include the options so the checker can tell whether the explanation covers the wrong answers and avoids positional labels.</p>
         <label class="field">
+          <span>Correct answer <span class="muted">(recommended)</span></span>
+          <input type="text" id="ans" placeholder="e.g. Hash table — the option's content, not its position" autocomplete="off" />
+        </label>
+        <p class="muted small field-help">When provided, the AI verifies the explanation actually supports this answer instead of working the problem out itself.</p>
+        <label class="field">
           <span>Explanation <span class="req">*</span></span>
           <textarea id="e" rows="6" placeholder="Paste the worked explanation / solution rationale here…"></textarea>
         </label>
@@ -197,7 +202,7 @@
     <!-- BATCH MODE -->
     <section id="batchMode" class="mode" hidden>
       <div class="input-card">
-        <p class="muted small">Provide many explanations at once. Upload a <b>CSV</b> or <b>JSON</b> file, or paste rows below. Recognised columns: <code>id</code>, <code>question</code>, <code>options</code>, <code>explanation</code>. Include the <code>question</code> and its <code>options</code> so the wrong-answer and positional-label checks work; in JSON, <code>options</code> can be an array of choices.</p>
+        <p class="muted small">Provide many explanations at once. Upload a <b>CSV</b> or <b>JSON</b> file, or paste rows below. Recognised columns: <code>id</code>, <code>question</code>, <code>options</code>, <code>answer</code>, <code>explanation</code>. Include the <code>question</code> and its <code>options</code> so the wrong-answer and positional-label checks work, and the keyed <code>answer</code> so the AI verifies against it instead of solving the problem itself; in JSON, <code>options</code> can be an array of choices.</p>
         <div class="row gap wrap-row">
           <label class="btn ghost file-btn">
             📁 Upload CSV / JSON
@@ -208,7 +213,7 @@
         </div>
         <label class="field">
           <span>…or paste CSV / TSV / JSON</span>
-          <textarea id="batchInput" rows="6" spellcheck="false" placeholder="id,question,options,explanation&#10;1,&quot;Which is prime?&quot;,&quot;A) 4 B) 9 C) 7&quot;,&quot;7 is prime because its only divisors are 1 and itself; 4 and 9 both factor (2×2 and 3×3).&quot;"></textarea>
+          <textarea id="batchInput" rows="6" spellcheck="false" placeholder="id,question,options,answer,explanation&#10;1,&quot;Which is prime?&quot;,&quot;A) 4 B) 9 C) 7&quot;,&quot;7&quot;,&quot;7 is prime because its only divisors are 1 and itself; 4 and 9 both factor (2×2 and 3×3).&quot;"></textarea>
         </label>
         <div class="row gap">
           <button id="runBatch" class="btn primary">Run checks</button>

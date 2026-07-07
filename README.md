@@ -19,16 +19,16 @@ Every explanation is scored two ways:
    - **Not cut off** — doesn't end truncated mid-sentence
    - LaTeX/MathJax is treated as normal, not an error.
 
-2. **AI review** (optional, bring-your-own Anthropic API key): the semantic judgment the offline checks can't make — Claude evaluates reasoning quality, conceptual grounding, **factual soundness** (it works the problem itself and flags explanations that argue for a wrong or unsupported answer), and distractor coverage, returning **Sufficient / Insufficient** plus a one-line reason naming the failed criterion. Mechanical issues (length, positional labels, truncation) are left to the offline checks so the two layers don't double-report. It renders as its own section beneath the heuristic score.
+2. **AI review** (optional, bring-your-own Anthropic API key): the semantic judgment the offline checks can't make — Claude evaluates reasoning quality, conceptual grounding, **factual soundness** (when a keyed correct answer is provided it verifies the explanation supports *that* answer; otherwise it works the problem itself), and distractor coverage, returning **Sufficient / Insufficient** plus a one-line reason naming the failed criterion. Mechanical issues (length, positional labels, truncation) are left to the offline checks so the two layers don't double-report. It renders as its own section beneath the heuristic score.
    - **✨ Make it better** — a one-click button in the AI review section asks the model to write a strong replacement explanation for that question (explains the mechanism, addresses the wrong options, avoids positional labels). **Use & re-check** drops the suggestion into the input and re-grades it; **Copy** copies it to the clipboard.
 
 Both the heuristic rubric (weights + thresholds) and the AI prompts (grading + "make it better") are **editable in the admin panel** and saved to your browser.
 
 ## Usage
 
-- **Single explanation** — paste the **full question stem and all answer options** (required) plus the **explanation** (required); get a score, a per-criterion checklist, and (if enabled) the AI verdict. The options matter: without them the checker can't tell whether the explanation covers the *wrong* answers or leans on positional labels.
+- **Single explanation** — paste the **full question stem and all answer options** (required), the **correct answer** (recommended), plus the **explanation** (required); get a score, a per-criterion checklist, and (if enabled) the AI verdict. The options matter: without them the checker can't tell whether the explanation covers the *wrong* answers or leans on positional labels. The correct answer matters too: with it, the AI verifies the explanation supports the *keyed* answer instead of solving the problem itself.
 - **Batch / upload** — paste or upload a **CSV / TSV / JSON** file of many explanations; get a sortable results table, summary stats, and CSV/JSON export.
-  - Recognised columns: `id`, `question`, `options`, `explanation`. Include `question` and `options` so the wrong-answer and positional-label checks are meaningful (rows missing them are still scored, with a heads-up). In JSON, `options` may be an array of choices. Use the in-app **Download CSV template** button for the exact shape.
+  - Recognised columns: `id`, `question`, `options`, `answer`, `explanation`. Include `question` and `options` so the wrong-answer and positional-label checks are meaningful (rows missing them are still scored, with a heads-up), and `answer` (the keyed correct answer, by content) so the AI verifies against it. In JSON, `options` may be an array of choices and `answer`/`correct`/`correct_answer` are all recognised. Use the in-app **Download CSV template** button for the exact shape.
 
 ### AI review setup
 
