@@ -159,6 +159,7 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 /* Input cards */
 .input-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
 .req { color: var(--bad); }
+.field-help { margin: 6px 0 0; }
 .status { font-size: .85rem; color: var(--muted); }
 
 /* Results */

@@ -25,9 +25,9 @@ Both the heuristic rubric (weights + thresholds) and the AI grading prompt are *
 
 ## Usage
 
-- **Single explanation** — paste a question + explanation, get a score, a per-criterion checklist, and (if enabled) the AI verdict.
+- **Single explanation** — paste the **full question stem and all answer options** (required) plus the **explanation** (required); get a score, a per-criterion checklist, and (if enabled) the AI verdict. The options matter: without them the checker can't tell whether the explanation covers the *wrong* answers or leans on positional labels.
 - **Batch / upload** — paste or upload a **CSV / TSV / JSON** file of many explanations; get a sortable results table, summary stats, and CSV/JSON export.
-  - Recognised columns: `id`, `question`, `explanation` (only `explanation` is required). Use the in-app **Download CSV template** button for the exact shape.
+  - Recognised columns: `id`, `question`, `options`, `explanation`. Include `question` and `options` so the wrong-answer and positional-label checks are meaningful (rows missing them are still scored, with a heads-up). In JSON, `options` may be an array of choices. Use the in-app **Download CSV template** button for the exact shape.
 
 ### AI review setup
 

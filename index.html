@@ -161,9 +161,10 @@
     <section id="singleMode" class="mode">
       <div class="input-card">
         <label class="field">
-          <span>Question <span class="muted">(optional but improves accuracy)</span></span>
-          <textarea id="q" rows="3" placeholder="e.g. Which data structure gives O(1) average-case lookup?"></textarea>
+          <span>Question &amp; answer options <span class="req">*</span></span>
+          <textarea id="q" rows="5" placeholder="Paste the full question stem AND all answer options, e.g.:&#10;Which data structure gives O(1) average-case lookup?&#10;A) Sorted array&#10;B) Hash table&#10;C) Linked list&#10;D) Binary search tree&#10;&#10;(For a free-response item, paste the prompt.)"></textarea>
         </label>
+        <p class="muted small field-help">Include the options so the checker can tell whether the explanation covers the wrong answers and avoids positional labels.</p>
         <label class="field">
           <span>Explanation <span class="req">*</span></span>
           <textarea id="e" rows="6" placeholder="Paste the worked explanation / solution rationale here…"></textarea>
@@ -180,7 +181,7 @@
     <!-- BATCH MODE -->
     <section id="batchMode" class="mode" hidden>
       <div class="input-card">
-        <p class="muted small">Provide many explanations at once. Upload a <b>CSV</b> or <b>JSON</b> file, or paste rows below. Recognised columns: <code>id</code>, <code>question</code>, <code>explanation</code> (only <code>explanation</code> is required).</p>
+        <p class="muted small">Provide many explanations at once. Upload a <b>CSV</b> or <b>JSON</b> file, or paste rows below. Recognised columns: <code>id</code>, <code>question</code>, <code>options</code>, <code>explanation</code>. Include the <code>question</code> and its <code>options</code> so the wrong-answer and positional-label checks work; in JSON, <code>options</code> can be an array of choices.</p>
         <div class="row gap wrap-row">
           <label class="btn ghost file-btn">
             📁 Upload CSV / JSON
@@ -191,7 +192,7 @@
         </div>
         <label class="field">
           <span>…or paste CSV / TSV / JSON</span>
-          <textarea id="batchInput" rows="6" spellcheck="false" placeholder="id,question,explanation&#10;1,&quot;What is 2+2?&quot;,&quot;It equals 4 because…&quot;"></textarea>
+          <textarea id="batchInput" rows="6" spellcheck="false" placeholder="id,question,options,explanation&#10;1,&quot;Which is prime?&quot;,&quot;A) 4 B) 9 C) 7&quot;,&quot;7 is prime because its only divisors are 1 and itself; 4 and 9 both factor (2×2 and 3×3).&quot;"></textarea>
         </label>
         <div class="row gap">
           <button id="runBatch" class="btn primary">Run checks</button>
