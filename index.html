@@ -83,46 +83,59 @@
           <li><b>Is complete and clean</b> — not cut off mid-sentence, free of copy-paste artifacts.</li>
         </ul>
 
-        <h4>Examples</h4>
-        <div class="examples">
-          <div class="example bad">
-            <div class="ex-head"><span class="pill bad">Weak</span> Just restates the answer</div>
-            <p class="ex-q">Q: Why does binary search require a sorted array?</p>
-            <p class="ex-e">“Because it needs the array to be sorted.”</p>
-            <p class="ex-note">Circular — repeats the question without explaining the mechanism.</p>
+        <h4>Examples — each row rewrites a weak explanation into a strong one</h4>
+        <div class="example-pairs">
+
+          <div class="pair">
+            <div class="pair-q">Q: Why does binary search require a sorted array?</div>
+            <div class="pair-cards">
+              <div class="example bad">
+                <div class="ex-head"><span class="pill bad">Weak</span> Just restates the answer</div>
+                <p class="ex-e">“Because it needs the array to be sorted.”</p>
+                <p class="ex-note">Circular — repeats the question without explaining the mechanism.</p>
+              </div>
+              <div class="example good">
+                <div class="ex-head"><span class="pill good">Strong</span> Explains the mechanism</div>
+                <p class="ex-e">“Binary search works by repeatedly comparing the target to the middle element and discarding half the range. That only works if the data is ordered — the comparison tells you <em>which</em> half the target must be in. On unsorted data a middle comparison says nothing about where the target lies, so you couldn't safely discard either half.”</p>
+                <p class="ex-note">Names the concept (halving via ordering) and says <em>why</em> order is required.</p>
+              </div>
+            </div>
           </div>
-          <div class="example good">
-            <div class="ex-head"><span class="pill good">Strong</span> Explains the mechanism</div>
-            <p class="ex-q">Q: Why does binary search require a sorted array?</p>
-            <p class="ex-e">“Binary search works by repeatedly comparing the target to the middle element and discarding half the range. That only works if the data is ordered — the comparison tells you <em>which</em> half the target must be in. On unsorted data a middle comparison gives no information about where the target lies, so you couldn't safely discard either half.”</p>
-            <p class="ex-note">Names the concept (halving via ordering) and says <em>why</em> order is required.</p>
+
+          <div class="pair">
+            <div class="pair-q">Q: What is the capital of France?</div>
+            <div class="pair-cards">
+              <div class="example bad">
+                <div class="ex-head"><span class="pill bad">Weak</span> One word, no grounding</div>
+                <p class="ex-e">“Paris.”</p>
+                <p class="ex-note">Correct, but a single word teaches nothing a learner could build on.</p>
+              </div>
+              <div class="example good">
+                <div class="ex-head"><span class="pill good">Strong</span> Adds context</div>
+                <p class="ex-e">“Paris is the capital of France. It has been the country's political and cultural centre for centuries and is home to the national government, so it's the seat of power rather than just the largest city.”</p>
+                <p class="ex-note">More than one sentence, and gives context that distinguishes “capital” from “biggest city”.</p>
+              </div>
+            </div>
           </div>
-          <div class="example bad">
-            <div class="ex-head"><span class="pill bad">Weak</span> Too brief, no grounding</div>
-            <p class="ex-q">Q: What is the capital of France?</p>
-            <p class="ex-e">“Paris.”</p>
-            <p class="ex-note">Correct, but teaches nothing — no context a learner could build on.</p>
+
+          <div class="pair">
+            <div class="pair-q">Q: Which planet is closest to the Sun? <span class="muted">(multiple choice)</span></div>
+            <div class="pair-cards">
+              <div class="example bad">
+                <div class="ex-head"><span class="pill bad">Weak</span> Positional labels, ignores distractors</div>
+                <p class="ex-e">“Option 2 is correct. The first and last options are wrong.”</p>
+                <p class="ex-note">Options may be shuffled, so “Option 2” can point at the wrong answer — and it never says <em>why</em> the others are wrong.</p>
+              </div>
+              <div class="example good">
+                <div class="ex-head"><span class="pill good">Strong</span> Names options, addresses distractors</div>
+                <p class="ex-e">“Mercury is closest because it has the smallest orbital radius. Venus is farther out despite being hotter (its thick atmosphere traps heat), and Earth and Mars are farther still — so none of those can be the closest.”</p>
+                <p class="ex-note">Refers to each option by name and explains why the distractors fail.</p>
+              </div>
+            </div>
           </div>
-          <div class="example good">
-            <div class="ex-head"><span class="pill good">Strong</span> Reasoning + context</div>
-            <p class="ex-q">Q: A hash table offers what average-case lookup time?</p>
-            <p class="ex-e">“O(1) on average, because the hash function maps a key directly to its bucket, so lookup time doesn't depend on how many items are stored — you jump straight to the location instead of scanning. Heavy collisions can degrade this toward O(n), which is why the hash function and load factor matter.”</p>
-            <p class="ex-note">Gives the reason, the trade-off, and when it breaks down.</p>
-          </div>
-          <div class="example bad">
-            <div class="ex-head"><span class="pill bad">Weak</span> Positional labels + ignores wrong options</div>
-            <p class="ex-q">Q: Which planet is closest to the Sun?</p>
-            <p class="ex-e">“Option 2 is correct. The first and last options are wrong.”</p>
-            <p class="ex-note">Options may be shuffled, so “Option 2” can point at the wrong answer — and it never says <em>why</em> the others are wrong.</p>
-          </div>
-          <div class="example good">
-            <div class="ex-head"><span class="pill good">Strong</span> Names options by content, addresses distractors</div>
-            <p class="ex-q">Q: Which planet is closest to the Sun?</p>
-            <p class="ex-e">“Mercury is closest because it has the smallest orbital radius. Venus is farther out despite being hotter (its thick atmosphere traps heat), and Earth and Mars are farther still — so none of those can be the closest.”</p>
-            <p class="ex-note">Refers to each option by name and explains why the distractors fail.</p>
-          </div>
+
         </div>
-        <p class="muted small">Tip: paste either example into the checker below to see how it scores.</p>
+        <p class="muted small">Tip: paste any of these into the checker below to see how it scores.</p>
       </div>
     </details>
 
