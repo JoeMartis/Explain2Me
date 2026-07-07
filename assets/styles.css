@@ -127,19 +127,21 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .guide-body p:first-child { margin-top: 16px; }
 .guide-criteria { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 6px; }
 .guide-criteria li { font-size: .9rem; }
-.example-pairs { display: grid; gap: 14px; }
-.pair { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-.pair-q { background: var(--surface-2); padding: 10px 14px; font-weight: 700; font-size: .88rem; border-bottom: 1px solid var(--border); }
-.pair-q .muted { font-weight: 400; }
-.pair-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
-.example { padding: 14px 16px; border-left: 4px solid transparent; }
-.example.good { border-left-color: var(--good); background: color-mix(in srgb, var(--good-bg) 45%, var(--surface)); }
-.example.bad { border-left-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 45%, var(--surface)); }
-.ex-head { font-size: .82rem; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.ex-e { font-size: .9rem; margin: 0 0 8px; }
-.ex-note { font-size: .8rem; color: var(--muted); margin: 0; font-style: italic; }
-@media (max-width: 640px) {
-  .pair-cards { grid-template-columns: 1fr; }
+.ex-list { display: grid; gap: 22px; }
+.ex-item { display: grid; gap: 8px; }
+.ex-q { font-weight: 700; font-size: .96rem; margin: 0 0 2px; }
+.ex-q .muted { font-weight: 400; }
+.ex-line { display: flex; gap: 14px; padding: 13px 16px; border-radius: 9px; border-left: 4px solid transparent; }
+.ex-line.bad { background: color-mix(in srgb, var(--bad-bg) 45%, var(--surface)); border-left-color: var(--bad); }
+.ex-line.good { background: color-mix(in srgb, var(--good-bg) 45%, var(--surface)); border-left-color: var(--good); }
+.ex-tag { flex: 0 0 auto; align-self: flex-start; font-weight: 700; font-size: .78rem; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.ex-tag.bad { color: var(--bad); background: var(--bad-bg); }
+.ex-tag.good { color: var(--good); background: var(--good-bg); }
+.ex-body { min-width: 0; }
+.ex-e { font-size: .95rem; margin: 0 0 5px; line-height: 1.55; }
+.ex-note { font-size: .84rem; color: var(--muted); margin: 0; font-style: italic; }
+@media (max-width: 520px) {
+  .ex-line { flex-direction: column; gap: 8px; }
 }
 
 /* API key bar */
@@ -179,8 +181,16 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .band.warn { background: var(--warn-bg); color: var(--warn); }
 .band.bad { background: var(--bad-bg); color: var(--bad); }
 .verdict h2 { font-size: 1.15rem; margin: 8px 0 4px; }
-.ai-verdict { margin-top: 12px; padding: 12px 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface-2); }
-.ai-verdict .lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+/* AI review section (single mode) */
+.ai-section { margin-top: 16px; padding: 18px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); border-left: 5px solid var(--border); }
+.ai-section.good { border-left-color: var(--good); background: color-mix(in srgb, var(--good-bg) 35%, var(--surface)); }
+.ai-section.bad { border-left-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 35%, var(--surface)); }
+.ai-section.loading { border-left-color: var(--accent); }
+.ai-section.off { border-left-style: dashed; }
+.ai-section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.ai-section-head h3 { font-size: 1.02rem; margin: 0; }
+.ai-reason { margin: 0; font-size: .96rem; line-height: 1.55; }
+.ai-model { margin: 8px 0 0; }
 
 /* Checklist */
 .checks { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 8px; }
@@ -218,7 +228,6 @@ td.qcell { max-width: 300px; }
 .flag { color: var(--bad); font-weight: 700; }
 .flag.ok { color: var(--good); }
 
-.site-footer { padding: 24px 20px 40px; }
 
 .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -2px; }
 @keyframes spin { to { transform: rotate(360deg); } }

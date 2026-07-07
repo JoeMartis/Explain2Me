@@ -1,6 +1,8 @@
-# Explain2Me — Explanation Quality Checker
+# Explainiac — Explanation Quality Checker
 
 A small, static web app that scores the **quality of problem explanations** — the worked rationales that accompany quiz/problem items. It's built for module teams to run against their own explanations before publishing.
+
+> Hosted from the `JoeMartis/Explain2Me` repository; the app itself is branded **Explainiac**.
 
 The explanation-quality logic is adapted from **[Fixatron2000](https://github.com/JoeMartis/Fixatron2000)**, distilled down to the single concern of "is this explanation any good?"
 
