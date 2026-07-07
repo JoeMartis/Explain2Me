@@ -131,6 +131,7 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .ex-item { display: grid; gap: 8px; }
 .ex-q { font-weight: 700; font-size: .96rem; margin: 0 0 2px; }
 .ex-q .muted { font-weight: 400; }
+.ex-opts { margin: 0 0 2px; font-size: .84rem; color: var(--muted); }
 .ex-line { display: flex; gap: 14px; padding: 13px 16px; border-radius: 9px; border-left: 4px solid transparent; }
 .ex-line.bad { background: color-mix(in srgb, var(--bad-bg) 45%, var(--surface)); border-left-color: var(--bad); }
 .ex-line.good { background: color-mix(in srgb, var(--good-bg) 45%, var(--surface)); border-left-color: var(--good); }

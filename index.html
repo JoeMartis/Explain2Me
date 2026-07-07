@@ -94,43 +94,46 @@
         <div class="ex-list">
 
           <div class="ex-item">
-            <p class="ex-q">Why does binary search require a sorted array?</p>
+            <p class="ex-q">A hash table offers what average-case lookup time?</p>
+            <p class="ex-opts">Options: O(1) &nbsp;·&nbsp; O(log n) &nbsp;·&nbsp; O(n)</p>
             <div class="ex-line bad">
               <span class="ex-tag bad">✗&nbsp;Weak</span>
               <div class="ex-body">
-                <p class="ex-e">“Because it needs the array to be sorted.”</p>
-                <p class="ex-note">Just restates the answer — circular, and never explains the mechanism.</p>
+                <p class="ex-e">“O(1) — it's the fastest one.”</p>
+                <p class="ex-note">Asserts the answer with no reasoning, and never says why the other two options are wrong.</p>
               </div>
             </div>
             <div class="ex-line good">
               <span class="ex-tag good">✓&nbsp;Strong</span>
               <div class="ex-body">
-                <p class="ex-e">“Binary search works by repeatedly comparing the target to the middle element and discarding half the range. That only works if the data is ordered — the comparison tells you <em>which</em> half the target must be in. On unsorted data a middle comparison says nothing about where the target lies, so you couldn't safely discard either half.”</p>
-                <p class="ex-note">Names the mechanism (halving via ordering) and says <em>why</em> order is required.</p>
+                <p class="ex-e">“O(1) on average, because the hash function maps a key directly to its bucket, so lookup doesn't depend on how many items are stored. O(log n) is the cost of a balanced tree or binary search, and O(n) is a full linear scan — a hash table avoids both by jumping straight to the bucket.”</p>
+                <p class="ex-note">Explains <em>why</em> the answer is right <strong>and</strong> rules out each incorrect option by name.</p>
               </div>
             </div>
           </div>
 
           <div class="ex-item">
-            <p class="ex-q">What is the capital of France?</p>
+            <p class="ex-q">Which city is the capital of France?</p>
+            <p class="ex-opts">Options: Marseille &nbsp;·&nbsp; Paris &nbsp;·&nbsp; Lyon</p>
             <div class="ex-line bad">
               <span class="ex-tag bad">✗&nbsp;Weak</span>
               <div class="ex-body">
                 <p class="ex-e">“Paris.”</p>
-                <p class="ex-note">One word — correct, but teaches nothing a learner could build on.</p>
+                <p class="ex-note">One word — no reasoning, and it ignores the other two options entirely.</p>
               </div>
             </div>
             <div class="ex-line good">
               <span class="ex-tag good">✓&nbsp;Strong</span>
               <div class="ex-body">
-                <p class="ex-e">“Paris is the capital of France. It has been the country's political and cultural centre for centuries and is home to the national government, so it's the seat of power rather than just the largest city.”</p>
-                <p class="ex-note">More than one sentence, and adds context that distinguishes “capital” from “biggest city”.</p>
+                <p class="ex-e">“Paris is the capital because it's the seat of the national government. Marseille and Lyon are large, historic French cities, but being populous or old doesn't make a city a capital — that role belongs to Paris.”</p>
+                <p class="ex-note">Gives the reason <em>and</em> says why the other cities aren't the answer.</p>
               </div>
             </div>
           </div>
 
           <div class="ex-item">
-            <p class="ex-q">Which planet is closest to the Sun? <span class="muted">(multiple choice)</span></p>
+            <p class="ex-q">Which planet is closest to the Sun?</p>
+            <p class="ex-opts">Options: Venus &nbsp;·&nbsp; Mercury &nbsp;·&nbsp; Earth &nbsp;·&nbsp; Mars</p>
             <div class="ex-line bad">
               <span class="ex-tag bad">✗&nbsp;Weak</span>
               <div class="ex-body">
