@@ -64,6 +64,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   const LS = {
     key: "e2m_api_key", model: "e2m_model", ai: "e2m_ai_enabled",
     rubric: "e2m_rubric", prompt: "e2m_ai_prompt", suggestPrompt: "e2m_suggest_prompt",
+    guide: "e2m_guide_open",
   };
 
   // ---------- State ----------
@@ -305,11 +306,11 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   // ---------- Rendering: single ----------
   // aiStatus: "loading" | "off" | "failed" (with failMsg) — used when `ai` is null.
   function renderSingle(res, ai, aiStatus, failMsg) {
-    const bandLabel = { good: "Good", warn: "Needs work", bad: "Insufficient" };
+    const bandLabel = { good: "Strong", warn: "Getting there", bad: "Needs work" };
     let overallBand = res.band, overallText = bandLabel[res.band];
     if (ai) {
-      if (!ai.sufficient) { overallBand = "bad"; overallText = "Insufficient"; }
-      else if (overallBand === "bad") { overallBand = "warn"; overallText = "Needs work"; }
+      if (!ai.sufficient) { overallBand = "bad"; overallText = "Needs work"; }
+      else if (overallBand === "bad") { overallBand = "warn"; overallText = "Getting there"; }
     }
     const ringColor = `var(--${overallBand === "good" ? "good" : overallBand === "warn" ? "warn" : "bad"})`;
 
@@ -340,8 +341,8 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
           <div class="ring" style="--p:${res.score};--ring-color:${ringColor};"><div class="ring-inner"><div><b>${res.score}</b><br><span>/ 100</span></div></div></div>
           <div class="verdict">
             <span class="band ${overallBand}">${overallText}</span>
-            <h2>Heuristic score: ${res.score}/100 · ${res.words} words</h2>
-            <p class="muted small">Rubric checks are collapsed below. The AI review is a separate model-graded verdict.</p>
+            <h2>Rubric score: ${res.score}/100 · ${res.words} words</h2>
+            <p class="muted small">Open the checklist below to see which criteria you hit and missed. The AI review is a separate model-graded verdict.</p>
           </div>
         </div>
         <details class="checks-details"${openAttr}>
@@ -364,8 +365,8 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
       state = ai.sufficient ? "good" : "bad";
       pill = `<span class="pill ${ai.sufficient ? "good" : "bad"}">${ai.sufficient ? "Sufficient" : "Insufficient"}</span>`;
       const improveLead = ai.sufficient
-        ? "Already solid — you can still generate an alternative take:"
-        : "This explanation fell short. Generate a stronger one that fixes the gaps above:";
+        ? "Already solid — want to see another way it could be written?"
+        : "See how a stronger version might look, then revise your own:";
       body = `<p class="ai-reason">${escapeHtml(ai.reason)}</p>
               <p class="ai-model muted small">Graded by ${model}</p>
               <div class="ai-improve">
@@ -442,7 +443,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
       if (status === "pass") return `<span class="flag ok">${okText}</span>`;
       return `<span class="flag">${badText}</span>`;
     };
-    const bandPill = (b) => `<span class="pill ${b}">${b === "good" ? "Good" : b === "warn" ? "Needs work" : "Insufficient"}</span>`;
+    const bandPill = (b) => `<span class="pill ${b}">${b === "good" ? "Strong" : b === "warn" ? "Getting there" : "Needs work"}</span>`;
     const aiPill = (v) => v === "na" ? `<span class="pill na">—</span>` : `<span class="pill ${v === "sufficient" ? "good" : "bad"}">${v === "sufficient" ? "OK" : "Weak"}</span>`;
 
     const body = sorted.map(r => `
@@ -479,9 +480,9 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
     $("batchSummary").innerHTML = `
       <div class="stat"><b>${n}</b><span>explanations</span></div>
       <div class="stat"><b>${avg}</b><span>avg score</span></div>
-      <div class="stat good"><b>${good}</b><span>good</span></div>
-      <div class="stat warn"><b>${warn}</b><span>needs work</span></div>
-      <div class="stat bad"><b>${bad}</b><span>insufficient</span></div>
+      <div class="stat good"><b>${good}</b><span>strong</span></div>
+      <div class="stat warn"><b>${warn}</b><span>getting there</span></div>
+      <div class="stat bad"><b>${bad}</b><span>needs work</span></div>
       ${anyAi ? `<div class="stat bad"><b>${weak}</b><span>AI flagged</span></div>` : ""}
       <div class="export-row">
         <button class="btn ghost small" id="expCsv">Export CSV</button>
@@ -742,7 +743,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
       const text = await aiSuggest(item, cfg);
       lastSuggestion = text;
       box.innerHTML = `
-        <div class="suggest-head"><b>✨ Suggested explanation</b> <span class="muted small">written by ${escapeHtml(cfg.model)}</span></div>
+        <div class="suggest-head"><b>✨ Example rewrite</b> <span class="muted small">by ${escapeHtml(cfg.model)} — compare it with yours</span></div>
         <p class="suggest-text">${escapeHtml(text)}</p>
         <div class="row gap">
           <button id="useSuggest" class="btn ghost small">Use &amp; re-check</button>
@@ -810,8 +811,16 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   }
 
   // ---------- Boot ----------
+  // Training guide: open on first visit, then remember the user's choice.
+  function initGuide() {
+    const guide = $("guide");
+    if (localStorage.getItem(LS.guide) === "closed") guide.open = false;
+    guide.addEventListener("toggle", () => localStorage.setItem(LS.guide, guide.open ? "open" : "closed"));
+  }
+
   initSettings();
   initTabs();
   initSingle();
   initBatch();
+  initGuide();
 })();

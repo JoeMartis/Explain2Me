@@ -1,6 +1,6 @@
-# Explainiac — Explanation Quality Checker
+# Explainiac — Explanation Writing Trainer
 
-A small, static web app that scores the **quality of problem explanations** — the worked rationales that accompany quiz/problem items. It's built for module teams to run against their own explanations before publishing.
+A small, static web app that **trains module authors to write problem explanations that teach** — the worked rationales that accompany quiz/problem items. Authors practice on their real items: paste a draft, get instant rubric feedback and an AI verdict, revise, re-check, and compare against an example rewrite. Batch mode doubles as a QA sweep over a whole item set before publishing.
 
 > Hosted from the `JoeMartis/Explain2Me` repository; the app itself is branded **Explainiac**.
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Explainiac — Explanation Quality Checker</title>
-  <meta name="description" content="Score the quality of problem explanations against a rubric. Offline heuristics plus optional AI review. Built for module teams." />
+  <title>Explainiac — Explanation Writing Trainer</title>
+  <meta name="description" content="A training tool for writing problem explanations that teach. Practice against a rubric with instant feedback, AI review, and example rewrites. Built for module teams." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A1%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -15,7 +15,7 @@
         <span class="brand-mark" aria-hidden="true">💡</span>
         <div>
           <h1>Explain<span class="accent">iac</span></h1>
-          <p class="tagline">Explanation quality checker for problem sets</p>
+          <p class="tagline">Train yourself to write problem explanations that teach</p>
         </div>
       </div>
       <button id="settingsToggle" class="btn ghost" aria-expanded="false" aria-controls="settingsPanel" hidden>⚙ Admin settings</button>
@@ -73,13 +73,13 @@
 
   <main class="wrap">
     <!-- Guidance -->
-    <details class="guide" id="guide">
+    <details class="guide" id="guide" open>
       <summary>
-        <span class="guide-title">📘 What makes a good explanation?</span>
-        <span class="guide-hint">Guidance &amp; examples — click to expand</span>
+        <span class="guide-title">📘 Training guide: what makes an explanation great?</span>
+        <span class="guide-hint">The criteria, worked examples, and how to practice</span>
       </summary>
       <div class="guide-body">
-        <p class="muted">A strong explanation doesn't just tell the learner the answer — it teaches the concept behind it. This tool scores explanations against the criteria below. Learners have a chat companion for follow-ups, so an explanation needn't cover every edge case, but it must give a solid foundation.</p>
+        <p class="muted">A strong explanation doesn't just tell the learner the answer — it teaches the concept behind it. This tool trains you to write those: it gives instant feedback against the criteria below so you can revise and re-check until it's strong. Learners have a chat companion for follow-ups, so an explanation needn't cover every edge case, but it must give a solid foundation.</p>
         <ul class="guide-criteria">
           <li><b>Explains <em>why</em>, not just <em>what</em></b> — give the reason the answer is correct, don't just assert it.</li>
           <li><b>Provides reasoning or conceptual context</b> — connect the answer to the underlying principle.</li>
@@ -151,7 +151,14 @@
           </div>
 
         </div>
-        <p class="muted small">Tip: paste any of these into the checker below to see how it scores.</p>
+        <h4>How to practice</h4>
+        <ol class="guide-steps">
+          <li>Paste one of your real items below — question, options, correct answer, and your draft explanation.</li>
+          <li>Get feedback: the rubric checklist shows exactly which criteria you hit and missed.</li>
+          <li>Revise your draft and re-check until it's strong.</li>
+          <li>Stuck? Use <b>✨ Make it better</b> to see an example rewrite — compare it with yours and notice what it does differently.</li>
+        </ol>
+        <p class="muted small">Tip: paste any of the examples above into the checker to see how it scores.</p>
       </div>
     </details>
 
@@ -169,7 +176,7 @@
 
     <!-- Mode tabs -->
     <nav class="tabs" role="tablist">
-      <button class="tab active" data-mode="single" role="tab" aria-selected="true">Single explanation</button>
+      <button class="tab active" data-mode="single" role="tab" aria-selected="true">Practice one explanation</button>
       <button class="tab" data-mode="batch" role="tab" aria-selected="false">Batch / upload</button>
     </nav>
 
@@ -191,7 +198,7 @@
           <textarea id="e" rows="6" placeholder="Paste the worked explanation / solution rationale here…"></textarea>
         </label>
         <div class="row gap">
-          <button id="checkSingle" class="btn primary">Check quality</button>
+          <button id="checkSingle" class="btn primary">Get feedback</button>
           <button id="loadSample" class="btn ghost">Load an example</button>
           <span id="singleStatus" class="status" aria-live="polite"></span>
         </div>
