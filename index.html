@@ -56,10 +56,17 @@
       </div>
 
       <div class="card">
-        <h3>AI prompt (advanced)</h3>
+        <h3>AI grading prompt (advanced)</h3>
         <p class="muted small">The instructions Claude grades against. Keep the JSON-array reply contract intact.</p>
         <textarea id="aiPrompt" rows="10" spellcheck="false"></textarea>
         <button id="resetPrompt" class="btn ghost small">Reset prompt</button>
+      </div>
+
+      <div class="card">
+        <h3>“Make it better” prompt (advanced)</h3>
+        <p class="muted small">The instructions Claude follows when writing a suggested replacement explanation. It should reply with only the explanation text.</p>
+        <textarea id="suggestPrompt" rows="10" spellcheck="false"></textarea>
+        <button id="resetSuggestPrompt" class="btn ghost small">Reset prompt</button>
       </div>
     </div>
   </section>

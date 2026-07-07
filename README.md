@@ -21,9 +21,10 @@ Every explanation is scored two ways:
    - **Clean formatting** — no Word/AI copy-paste artifacts
    - LaTeX/MathJax is treated as normal, not an error.
 
-2. **AI review** (optional, bring-your-own Anthropic API key): mirrors Fixatron's "explanation quality" check — Claude judges whether the explanation explains *why* the answer is correct, gives reasoning, and is substantive, returning **Sufficient / Insufficient** plus a one-line reason.
+2. **AI review** (optional, bring-your-own Anthropic API key): mirrors Fixatron's "explanation quality" check — Claude judges whether the explanation explains *why* the answer is correct, gives reasoning, and is substantive, returning **Sufficient / Insufficient** plus a one-line reason. It renders as its own section beneath the heuristic score.
+   - **✨ Make it better** — a one-click button in the AI review section asks the model to write a strong replacement explanation for that question (explains the mechanism, addresses the wrong options, avoids positional labels). **Use & re-check** drops the suggestion into the input and re-grades it; **Copy** copies it to the clipboard.
 
-Both the heuristic rubric (weights + thresholds) and the AI grading prompt are **editable in the UI** and saved to your browser.
+Both the heuristic rubric (weights + thresholds) and the AI prompts (grading + "make it better") are **editable in the admin panel** and saved to your browser.
 
 ## Usage
 

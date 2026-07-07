@@ -191,6 +191,11 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .ai-section-head h3 { font-size: 1.02rem; margin: 0; }
 .ai-reason { margin: 0; font-size: .96rem; line-height: 1.55; }
 .ai-model { margin: 8px 0 0; }
+.ai-improve { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); }
+.ai-improve > p { margin: 0 0 10px; }
+.suggest-box { margin-top: 12px; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+.suggest-head { margin-bottom: 8px; }
+.suggest-text { margin: 0 0 12px; font-size: .96rem; line-height: 1.6; white-space: pre-wrap; }
 
 /* Checklist */
 .checks { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 8px; }
