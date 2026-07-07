@@ -19,7 +19,7 @@ Every explanation is scored two ways:
    - **Not cut off** — doesn't end truncated mid-sentence
    - LaTeX/MathJax is treated as normal, not an error.
 
-2. **AI review** (optional, bring-your-own Anthropic API key): mirrors Fixatron's "explanation quality" check — Claude judges whether the explanation explains *why* the answer is correct, gives reasoning, and is substantive, returning **Sufficient / Insufficient** plus a one-line reason. It renders as its own section beneath the heuristic score.
+2. **AI review** (optional, bring-your-own Anthropic API key): the semantic judgment the offline checks can't make — Claude evaluates reasoning quality, conceptual grounding, **factual soundness** (it works the problem itself and flags explanations that argue for a wrong or unsupported answer), and distractor coverage, returning **Sufficient / Insufficient** plus a one-line reason naming the failed criterion. Mechanical issues (length, positional labels, truncation) are left to the offline checks so the two layers don't double-report. It renders as its own section beneath the heuristic score.
    - **✨ Make it better** — a one-click button in the AI review section asks the model to write a strong replacement explanation for that question (explains the mechanism, addresses the wrong options, avoids positional labels). **Use & re-check** drops the suggestion into the input and re-grades it; **Copy** copies it to the clipboard.
 
 Both the heuristic rubric (weights + thresholds) and the AI prompts (grading + "make it better") are **editable in the admin panel** and saved to your browser.

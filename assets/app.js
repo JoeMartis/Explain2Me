@@ -6,27 +6,26 @@
   "use strict";
 
   // ---------- Defaults ----------
-  const DEFAULT_AI_PROMPT = `You are a QA checker for an online course. The user will provide MULTIPLE quiz problems inside <course_content> tags. Each problem is wrapped in <item id="..."> tags with the question and its explanation.
+  const DEFAULT_AI_PROMPT = `You are a QA reviewer for an online course. The user will provide MULTIPLE quiz problems inside <course_content> tags. Each problem is wrapped in <item id="..."> tags containing the question (with its answer options, when it is multiple choice) followed by the explanation to review.
 
-Note: Learners have access to a chat companion that can answer follow-up questions, so explanations do not need to cover every detail — but they should give a solid foundation.
+Your job is the SEMANTIC judgment that automated checks can't make. Simple mechanical issues (length, positional labels like "Option 1", truncation) are flagged separately by offline checks — do not fail an item solely for those. Focus on:
 
-For EACH item, evaluate the explanation against these criteria:
-1. Does it explain WHY the correct answer is correct (not just restate it)?
-2. Does it provide meaningful reasoning or conceptual context?
-3. Is it substantive — more than ONE sentence? A single sentence is not a sufficient explanation.
-4. For multiple-choice items, does it generally explain why the incorrect options are incorrect? (Skipping a trivially wrong option is acceptable, but the distractors should not be ignored entirely.)
-5. Does it avoid referring to answer options by position or label — e.g. "Option 1", "the first option", "choice B", "the last answer"? Answer options may be SHUFFLED when displayed, so positional references break. Options must be referred to by their content instead.
+1. Reasoning — does the explanation explain WHY the answer is correct, connecting it to the underlying concept or mechanism? Or does it merely assert/restate the answer?
+2. Conceptual grounding — would a learner who got this wrong understand the idea well enough to handle a similar problem next time?
+3. Factual soundness — work the problem yourself from the question and options. Is the reasoning in the explanation actually correct? Does it argue for an answer the question supports? An explanation that reasons confidently toward a wrong or unsupported conclusion is INSUFFICIENT.
+4. Distractor coverage — for multiple-choice items, does it generally explain why the incorrect options are incorrect? (Skipping a trivially wrong option is fine; ignoring the distractors entirely is not.)
 
-Mark an item as INSUFFICIENT if:
-- The explanation only restates the correct answer without any reasoning
-- It is only a single sentence, or too brief to have real substance
-- It provides no conceptual grounding at all
-- It refers to options by position or label (e.g. "Option 2 is correct") — this is wrong whenever options are shuffled
-- It is for a multiple-choice question and gives no attention at all to why the incorrect options are wrong
+Note: Learners have access to a chat companion for follow-up questions, so an explanation need not cover every edge case — it must give a correct, solid foundation.
 
-The content may contain LaTeX/MathJax notation (e.g. \\frac{}, $x^2$, \\( \\), \\[ \\]) — this is normal mathematical formatting, not a formatting issue.
+Mark an item INSUFFICIENT if any of these hold:
+- It only restates or asserts the answer without real reasoning
+- It provides no conceptual grounding a learner could build on
+- Its reasoning is factually wrong, or it justifies an answer the question doesn't support
+- It is multiple choice and gives no attention at all to why the incorrect options are wrong
 
-Reply ONLY with a JSON array, one entry per <item> in the input, in input order. Each entry must include the exact id from the input:
+The content may contain LaTeX/MathJax notation (e.g. \\frac{}, $x^2$, \\( \\), \\[ \\]) — this is normal mathematical formatting, not an issue.
+
+Reply ONLY with a JSON array, one entry per <item> in the input, in input order. Each entry must include the exact id from the input, and the reason must name the specific criterion that failed (or say what makes it sufficient):
 [
   { "id": "<item id>", "sufficient": true, "reason": "brief explanation" }
 ]
@@ -71,7 +70,14 @@ Work out the correct answer yourself from the question and options. Reply with O
     location.hash.replace("#", "").toLowerCase() === "admin";
 
   let rubric = loadRubric();
+  // A stored prompt that matches an OLD default is stale, not a customisation —
+  // let the current default supersede it. Genuine edits are preserved.
+  const STALE_PROMPT_MARKERS = ["You are a QA checker for an online course"];
   let aiPrompt = localStorage.getItem(LS.prompt) || DEFAULT_AI_PROMPT;
+  if (STALE_PROMPT_MARKERS.some(m => aiPrompt.startsWith(m)) &&
+      /Is it substantive — more than ONE sentence\?/.test(aiPrompt)) {
+    aiPrompt = DEFAULT_AI_PROMPT; localStorage.setItem(LS.prompt, aiPrompt);
+  }
   let suggestPrompt = localStorage.getItem(LS.suggestPrompt) || DEFAULT_SUGGEST_PROMPT;
   let lastSuggestion = ""; // most recent AI-suggested explanation (single mode)
   let lastBatch = null; // {rows, sortKey, sortDir}
