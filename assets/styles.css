@@ -46,6 +46,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -134,6 +135,14 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .ex-q { font-size: .82rem; color: var(--muted); margin: 0 0 6px; font-weight: 600; }
 .ex-e { font-size: .9rem; margin: 0 0 8px; }
 .ex-note { font-size: .8rem; color: var(--muted); margin: 0; font-style: italic; }
+
+/* API key bar */
+.key-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.key-bar-text { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 2px; }
+.key-bar-text b { font-size: .95rem; }
+.key-bar-controls { display: flex; gap: 8px; align-items: center; flex: 1; min-width: 260px; }
+.key-bar-controls input { flex: 1; }
 
 /* Tabs */
 .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }

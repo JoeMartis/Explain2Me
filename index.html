@@ -18,7 +18,7 @@
           <p class="tagline">Explanation quality checker for problem sets</p>
         </div>
       </div>
-      <button id="settingsToggle" class="btn ghost" aria-expanded="false" aria-controls="settingsPanel">⚙ Settings</button>
+      <button id="settingsToggle" class="btn ghost" aria-expanded="false" aria-controls="settingsPanel" hidden>⚙ Admin settings</button>
     </div>
   </header>
 
@@ -26,12 +26,8 @@
   <section id="settingsPanel" class="settings-panel wrap" hidden>
     <div class="settings-grid">
       <div class="card">
-        <h3>AI review (optional)</h3>
-        <p class="muted small">Runs your explanations through Claude, mirroring the Fixatron "explanation quality" check. Your API key is stored only in this browser (localStorage) and is sent directly to Anthropic — never to any other server.</p>
-        <label class="field">
-          <span>Anthropic API key</span>
-          <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
-        </label>
+        <h3>AI review</h3>
+        <p class="muted small">Model and on/off switch for the AI review. The API key itself is entered on the main page.</p>
         <div class="row gap">
           <label class="field grow">
             <span>Model</span>
@@ -46,7 +42,6 @@
             <input type="checkbox" id="aiEnabled" checked />
           </label>
         </div>
-        <button id="forgetKey" class="btn ghost small">Forget stored key</button>
       </div>
 
       <div class="card">
@@ -81,7 +76,7 @@
         <ul class="guide-criteria">
           <li><b>Explains <em>why</em>, not just <em>what</em></b> — give the reason the answer is correct, don't just assert it.</li>
           <li><b>Provides reasoning or conceptual context</b> — connect the answer to the underlying principle.</li>
-          <li><b>Is substantive</b> — more than a single generic sentence.</li>
+          <li><b>Is substantive</b> — an explanation should be <em>more than one sentence</em>; a single sentence rarely teaches the concept.</li>
           <li><b>Adds something new</b> — doesn't merely restate the question or repeat the correct option.</li>
           <li><b>Addresses the wrong options</b> — for multiple-choice items, generally explain <em>why the incorrect answers are incorrect</em>, not just why the right one is right.</li>
           <li><b>Names options by content, not position</b> — never say “Option 1”, “the first option”, or “choice B”. Answer options may be <em>shuffled</em> when displayed, so a positional reference can point at the wrong answer.</li>
@@ -130,6 +125,18 @@
         <p class="muted small">Tip: paste either example into the checker below to see how it scores.</p>
       </div>
     </details>
+
+    <!-- API key (surfaced) -->
+    <div class="key-bar" id="keyBar">
+      <div class="key-bar-text">
+        <b>🔑 Anthropic API key</b>
+        <span class="muted small">Optional — enables the AI review of each explanation. Stored only in this browser and sent directly to Anthropic; without it, offline checks still run.</span>
+      </div>
+      <div class="key-bar-controls">
+        <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" aria-label="Anthropic API key" />
+        <button id="forgetKey" class="btn ghost small" title="Remove the key from this browser">Forget</button>
+      </div>
+    </div>
 
     <!-- Mode tabs -->
     <nav class="tabs" role="tablist">

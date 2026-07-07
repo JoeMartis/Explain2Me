@@ -10,9 +10,11 @@ Every explanation is scored two ways:
 
 1. **Offline heuristics** (no key, runs in the browser):
    - **Present** — there is a real explanation
-   - **Substantive length** — more than one throwaway sentence (configurable word target)
+   - **Substantive length** — an explanation should be **more than one sentence**, and meet a configurable word target
    - **Shows reasoning** — uses explanatory language ("because", "therefore", …) rather than bare assertion
    - **Not a restatement** — adds something beyond echoing the question/answer
+   - **Addresses wrong options** — for multiple-choice items, generally explains why the incorrect answers are incorrect
+   - **No positional labels** — never "Option 1" / "the first option" / "choice B"; options may be shuffled when displayed, so options must be referred to by content
    - **Not cut off** — doesn't end truncated mid-sentence
    - **Clean formatting** — no Word/AI copy-paste artifacts
    - LaTeX/MathJax is treated as normal, not an error.
@@ -29,7 +31,13 @@ Both the heuristic rubric (weights + thresholds) and the AI grading prompt are *
 
 ### AI review setup
 
-Open **⚙ Settings**, paste an Anthropic API key, pick a model (Haiku 4.5 is the fast/cheap default, matching the Fixatron), and tick **Enable AI**. The key is stored **only in your browser's localStorage** and is sent **directly to `api.anthropic.com`** — it never touches any intermediary server. Use **Forget stored key** to clear it.
+Paste an Anthropic API key into the **🔑 API key** box on the main page. The key is stored **only in your browser's localStorage** and is sent **directly to `api.anthropic.com`** — it never touches any intermediary server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
+
+### Admin settings
+
+The tuning knobs — model choice, AI on/off, rubric weights and word threshold, and the AI grading prompt — live in an admin panel that is hidden from everyday users. Open the app with **`?admin=1`** appended to the URL (e.g. `https://<owner>.github.io/<repo>/?admin=1`) and a **⚙ Admin settings** button appears in the header.
+
+> This hides complexity; it is **not** access control. The app is fully client-side, so anyone who knows the parameter can open the panel — and every setting is stored per-browser, so an admin's changes only affect their own browser.
 
 > Note: browser calls use Anthropic's `anthropic-dangerous-direct-browser-access` header. This is fine for a trusted internal tool where each teammate uses their own key, but the key is exposed to anything running in that browser tab — don't embed a shared org key in the page.
 
