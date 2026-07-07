@@ -308,6 +308,20 @@ Work out the correct answer yourself from the question and options. Reply with O
       return `<li class="check ${c.status}"><span class="ico">${ico}</span><div class="body"><b>${meta.label}</b><p>${escapeHtml(c.detail)}</p>${tip}</div></li>`;
     }).join("");
 
+    // Pass/warn/fail tally for the collapsed checklist summary.
+    const statuses = Object.values(res.checks).map(c => c.status);
+    const nPass = statuses.filter(s => s === "pass").length;
+    const nWarn = statuses.filter(s => s === "warn").length;
+    const nFail = statuses.filter(s => s === "fail").length;
+    const tally = [
+      `<span class="tally pass">✓ ${nPass}</span>`,
+      nWarn ? `<span class="tally warn">! ${nWarn}</span>` : "",
+      nFail ? `<span class="tally fail">✕ ${nFail}</span>` : "",
+    ].join("");
+    // Keep the checklist expanded when something needs attention, collapsed
+    // when everything passes — so the AI review stays near the top.
+    const openAttr = (nWarn || nFail) ? " open" : "";
+
     $("singleResult").innerHTML = `
       <div class="score-card">
         <div class="score-head">
@@ -315,10 +329,17 @@ Work out the correct answer yourself from the question and options. Reply with O
           <div class="verdict">
             <span class="band ${overallBand}">${overallText}</span>
             <h2>Heuristic score: ${res.score}/100 · ${res.words} words</h2>
-            <p class="muted small">Offline rubric checks are below. The AI review is a separate model-graded verdict.</p>
+            <p class="muted small">Rubric checks are collapsed below. The AI review is a separate model-graded verdict.</p>
           </div>
         </div>
-        <ul class="checks">${checksHtml}</ul>
+        <details class="checks-details"${openAttr}>
+          <summary>
+            <span class="sum-label">Rubric checklist</span>
+            <span class="sum-tally">${tally}</span>
+            <span class="chev" aria-hidden="true">▾</span>
+          </summary>
+          <ul class="checks">${checksHtml}</ul>
+        </details>
       </div>
       ${aiSectionHtml(ai, aiStatus, failMsg)}`;
   }

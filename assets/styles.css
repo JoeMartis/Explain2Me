@@ -197,8 +197,20 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .suggest-head { margin-bottom: 8px; }
 .suggest-text { margin: 0 0 12px; font-size: .96rem; line-height: 1.6; white-space: pre-wrap; }
 
+/* Collapsible rubric checklist */
+.checks-details { margin-top: 18px; border-top: 1px solid var(--border); }
+.checks-details > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 14px 2px 4px; font-weight: 600; font-size: .92rem; }
+.checks-details > summary::-webkit-details-marker { display: none; }
+.sum-tally { display: inline-flex; gap: 8px; margin-left: auto; }
+.tally { font-size: .8rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; }
+.tally.pass { color: var(--good); background: var(--good-bg); }
+.tally.warn { color: var(--warn); background: var(--warn-bg); }
+.tally.fail { color: var(--bad); background: var(--bad-bg); }
+.chev { color: var(--muted); transition: transform .15s ease; }
+.checks-details[open] .chev { transform: rotate(180deg); }
+
 /* Checklist */
-.checks { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 8px; }
+.checks { list-style: none; padding: 0; margin: 12px 0 4px; display: grid; gap: 8px; }
 .check { display: flex; gap: 11px; align-items: flex-start; padding: 11px 13px; border-radius: 9px; background: var(--surface-2); }
 .check .ico { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .8rem; font-weight: 700; color: #fff; }
 .check.pass .ico { background: var(--good); }
