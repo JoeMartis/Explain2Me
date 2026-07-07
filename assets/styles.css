@@ -181,8 +181,16 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .band.warn { background: var(--warn-bg); color: var(--warn); }
 .band.bad { background: var(--bad-bg); color: var(--bad); }
 .verdict h2 { font-size: 1.15rem; margin: 8px 0 4px; }
-.ai-verdict { margin-top: 12px; padding: 12px 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface-2); }
-.ai-verdict .lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+/* AI review section (single mode) */
+.ai-section { margin-top: 16px; padding: 18px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); border-left: 5px solid var(--border); }
+.ai-section.good { border-left-color: var(--good); background: color-mix(in srgb, var(--good-bg) 35%, var(--surface)); }
+.ai-section.bad { border-left-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 35%, var(--surface)); }
+.ai-section.loading { border-left-color: var(--accent); }
+.ai-section.off { border-left-style: dashed; }
+.ai-section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.ai-section-head h3 { font-size: 1.02rem; margin: 0; }
+.ai-reason { margin: 0; font-size: .96rem; line-height: 1.55; }
+.ai-model { margin: 8px 0 0; }
 
 /* Checklist */
 .checks { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 8px; }
