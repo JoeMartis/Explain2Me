@@ -220,7 +220,6 @@ td.qcell { max-width: 300px; }
 .flag { color: var(--bad); font-weight: 700; }
 .flag.ok { color: var(--good); }
 
-.site-footer { padding: 24px 20px 40px; }
 
 .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -2px; }
 @keyframes spin { to { transform: rotate(360deg); } }
