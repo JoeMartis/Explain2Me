@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Explain2Me — Explanation Quality Checker</title>
+  <title>Explainiac — Explanation Quality Checker</title>
   <meta name="description" content="Score the quality of problem explanations against a rubric. Offline heuristics plus optional AI review. Built for module teams." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A1%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="assets/styles.css" />
@@ -14,7 +14,7 @@
       <div class="brand">
         <span class="brand-mark" aria-hidden="true">💡</span>
         <div>
-          <h1>Explain<span class="accent">2</span>Me</h1>
+          <h1>Explain<span class="accent">iac</span></h1>
           <p class="tagline">Explanation quality checker for problem sets</p>
         </div>
       </div>
@@ -83,53 +83,59 @@
           <li><b>Is complete and clean</b> — not cut off mid-sentence, free of copy-paste artifacts.</li>
         </ul>
 
-        <h4>Examples — each row rewrites a weak explanation into a strong one</h4>
-        <div class="example-pairs">
+        <h4>Examples — a weak explanation and its stronger rewrite</h4>
+        <div class="ex-list">
 
-          <div class="pair">
-            <div class="pair-q">Q: Why does binary search require a sorted array?</div>
-            <div class="pair-cards">
-              <div class="example bad">
-                <div class="ex-head"><span class="pill bad">Weak</span> Just restates the answer</div>
+          <div class="ex-item">
+            <p class="ex-q">Why does binary search require a sorted array?</p>
+            <div class="ex-line bad">
+              <span class="ex-tag bad">✗&nbsp;Weak</span>
+              <div class="ex-body">
                 <p class="ex-e">“Because it needs the array to be sorted.”</p>
-                <p class="ex-note">Circular — repeats the question without explaining the mechanism.</p>
+                <p class="ex-note">Just restates the answer — circular, and never explains the mechanism.</p>
               </div>
-              <div class="example good">
-                <div class="ex-head"><span class="pill good">Strong</span> Explains the mechanism</div>
+            </div>
+            <div class="ex-line good">
+              <span class="ex-tag good">✓&nbsp;Strong</span>
+              <div class="ex-body">
                 <p class="ex-e">“Binary search works by repeatedly comparing the target to the middle element and discarding half the range. That only works if the data is ordered — the comparison tells you <em>which</em> half the target must be in. On unsorted data a middle comparison says nothing about where the target lies, so you couldn't safely discard either half.”</p>
-                <p class="ex-note">Names the concept (halving via ordering) and says <em>why</em> order is required.</p>
+                <p class="ex-note">Names the mechanism (halving via ordering) and says <em>why</em> order is required.</p>
               </div>
             </div>
           </div>
 
-          <div class="pair">
-            <div class="pair-q">Q: What is the capital of France?</div>
-            <div class="pair-cards">
-              <div class="example bad">
-                <div class="ex-head"><span class="pill bad">Weak</span> One word, no grounding</div>
+          <div class="ex-item">
+            <p class="ex-q">What is the capital of France?</p>
+            <div class="ex-line bad">
+              <span class="ex-tag bad">✗&nbsp;Weak</span>
+              <div class="ex-body">
                 <p class="ex-e">“Paris.”</p>
-                <p class="ex-note">Correct, but a single word teaches nothing a learner could build on.</p>
+                <p class="ex-note">One word — correct, but teaches nothing a learner could build on.</p>
               </div>
-              <div class="example good">
-                <div class="ex-head"><span class="pill good">Strong</span> Adds context</div>
+            </div>
+            <div class="ex-line good">
+              <span class="ex-tag good">✓&nbsp;Strong</span>
+              <div class="ex-body">
                 <p class="ex-e">“Paris is the capital of France. It has been the country's political and cultural centre for centuries and is home to the national government, so it's the seat of power rather than just the largest city.”</p>
-                <p class="ex-note">More than one sentence, and gives context that distinguishes “capital” from “biggest city”.</p>
+                <p class="ex-note">More than one sentence, and adds context that distinguishes “capital” from “biggest city”.</p>
               </div>
             </div>
           </div>
 
-          <div class="pair">
-            <div class="pair-q">Q: Which planet is closest to the Sun? <span class="muted">(multiple choice)</span></div>
-            <div class="pair-cards">
-              <div class="example bad">
-                <div class="ex-head"><span class="pill bad">Weak</span> Positional labels, ignores distractors</div>
+          <div class="ex-item">
+            <p class="ex-q">Which planet is closest to the Sun? <span class="muted">(multiple choice)</span></p>
+            <div class="ex-line bad">
+              <span class="ex-tag bad">✗&nbsp;Weak</span>
+              <div class="ex-body">
                 <p class="ex-e">“Option 2 is correct. The first and last options are wrong.”</p>
-                <p class="ex-note">Options may be shuffled, so “Option 2” can point at the wrong answer — and it never says <em>why</em> the others are wrong.</p>
+                <p class="ex-note">Positional labels break when options are shuffled, and it never says <em>why</em> the others are wrong.</p>
               </div>
-              <div class="example good">
-                <div class="ex-head"><span class="pill good">Strong</span> Names options, addresses distractors</div>
+            </div>
+            <div class="ex-line good">
+              <span class="ex-tag good">✓&nbsp;Strong</span>
+              <div class="ex-body">
                 <p class="ex-e">“Mercury is closest because it has the smallest orbital radius. Venus is farther out despite being hotter (its thick atmosphere traps heat), and Earth and Mars are farther still — so none of those can be the closest.”</p>
-                <p class="ex-note">Refers to each option by name and explains why the distractors fail.</p>
+                <p class="ex-note">Names each option by content and explains why the distractors fail.</p>
               </div>
             </div>
           </div>

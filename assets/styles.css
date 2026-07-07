@@ -127,19 +127,21 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .guide-body p:first-child { margin-top: 16px; }
 .guide-criteria { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 6px; }
 .guide-criteria li { font-size: .9rem; }
-.example-pairs { display: grid; gap: 14px; }
-.pair { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-.pair-q { background: var(--surface-2); padding: 10px 14px; font-weight: 700; font-size: .88rem; border-bottom: 1px solid var(--border); }
-.pair-q .muted { font-weight: 400; }
-.pair-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
-.example { padding: 14px 16px; border-left: 4px solid transparent; }
-.example.good { border-left-color: var(--good); background: color-mix(in srgb, var(--good-bg) 45%, var(--surface)); }
-.example.bad { border-left-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 45%, var(--surface)); }
-.ex-head { font-size: .82rem; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.ex-e { font-size: .9rem; margin: 0 0 8px; }
-.ex-note { font-size: .8rem; color: var(--muted); margin: 0; font-style: italic; }
-@media (max-width: 640px) {
-  .pair-cards { grid-template-columns: 1fr; }
+.ex-list { display: grid; gap: 22px; }
+.ex-item { display: grid; gap: 8px; }
+.ex-q { font-weight: 700; font-size: .96rem; margin: 0 0 2px; }
+.ex-q .muted { font-weight: 400; }
+.ex-line { display: flex; gap: 14px; padding: 13px 16px; border-radius: 9px; border-left: 4px solid transparent; }
+.ex-line.bad { background: color-mix(in srgb, var(--bad-bg) 45%, var(--surface)); border-left-color: var(--bad); }
+.ex-line.good { background: color-mix(in srgb, var(--good-bg) 45%, var(--surface)); border-left-color: var(--good); }
+.ex-tag { flex: 0 0 auto; align-self: flex-start; font-weight: 700; font-size: .78rem; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.ex-tag.bad { color: var(--bad); background: var(--bad-bg); }
+.ex-tag.good { color: var(--good); background: var(--good-bg); }
+.ex-body { min-width: 0; }
+.ex-e { font-size: .95rem; margin: 0 0 5px; line-height: 1.55; }
+.ex-note { font-size: .84rem; color: var(--muted); margin: 0; font-style: italic; }
+@media (max-width: 520px) {
+  .ex-line { flex-direction: column; gap: 8px; }
 }
 
 /* API key bar */
