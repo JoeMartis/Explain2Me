@@ -11,14 +11,12 @@ The explanation-quality logic is adapted from **[Fixatron2000](https://github.co
 Every explanation is scored two ways:
 
 1. **Offline heuristics** (no key, runs in the browser):
-   - **Present** — there is a real explanation
    - **Substantive length** — an explanation should be **more than one sentence**, and meet a configurable word target
    - **Shows reasoning** — uses explanatory language ("because", "therefore", …) rather than bare assertion
    - **Not a restatement** — adds something beyond echoing the question/answer
    - **Addresses wrong options** — for multiple-choice items, generally explains why the incorrect answers are incorrect
    - **No positional labels** — never "Option 1" / "the first option" / "choice B"; options may be shuffled when displayed, so options must be referred to by content
    - **Not cut off** — doesn't end truncated mid-sentence
-   - **Clean formatting** — no Word/AI copy-paste artifacts
    - LaTeX/MathJax is treated as normal, not an error.
 
 2. **AI review** (optional, bring-your-own Anthropic API key): mirrors Fixatron's "explanation quality" check — Claude judges whether the explanation explains *why* the answer is correct, gives reasoning, and is substantive, returning **Sufficient / Insufficient** plus a one-line reason. It renders as its own section beneath the heuristic score.
