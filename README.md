@@ -1,0 +1,70 @@
+# Explain2Me — Explanation Quality Checker
+
+A small, static web app that scores the **quality of problem explanations** — the worked rationales that accompany quiz/problem items. It's built for module teams to run against their own explanations before publishing.
+
+The explanation-quality logic is adapted from **[Fixatron2000](https://github.com/JoeMartis/Fixatron2000)**, distilled down to the single concern of "is this explanation any good?"
+
+## What it checks
+
+Every explanation is scored two ways:
+
+1. **Offline heuristics** (no key, runs in the browser):
+   - **Present** — there is a real explanation
+   - **Substantive length** — an explanation should be **more than one sentence**, and meet a configurable word target
+   - **Shows reasoning** — uses explanatory language ("because", "therefore", …) rather than bare assertion
+   - **Not a restatement** — adds something beyond echoing the question/answer
+   - **Addresses wrong options** — for multiple-choice items, generally explains why the incorrect answers are incorrect
+   - **No positional labels** — never "Option 1" / "the first option" / "choice B"; options may be shuffled when displayed, so options must be referred to by content
+   - **Not cut off** — doesn't end truncated mid-sentence
+   - **Clean formatting** — no Word/AI copy-paste artifacts
+   - LaTeX/MathJax is treated as normal, not an error.
+
+2. **AI review** (optional, bring-your-own Anthropic API key): mirrors Fixatron's "explanation quality" check — Claude judges whether the explanation explains *why* the answer is correct, gives reasoning, and is substantive, returning **Sufficient / Insufficient** plus a one-line reason.
+
+Both the heuristic rubric (weights + thresholds) and the AI grading prompt are **editable in the UI** and saved to your browser.
+
+## Usage
+
+- **Single explanation** — paste a question + explanation, get a score, a per-criterion checklist, and (if enabled) the AI verdict.
+- **Batch / upload** — paste or upload a **CSV / TSV / JSON** file of many explanations; get a sortable results table, summary stats, and CSV/JSON export.
+  - Recognised columns: `id`, `question`, `explanation` (only `explanation` is required). Use the in-app **Download CSV template** button for the exact shape.
+
+### AI review setup
+
+Paste an Anthropic API key into the **🔑 API key** box on the main page. The key is stored **only in your browser's localStorage** and is sent **directly to `api.anthropic.com`** — it never touches any intermediary server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
+
+### Admin settings
+
+The tuning knobs — model choice, AI on/off, rubric weights and word threshold, and the AI grading prompt — live in an admin panel that is hidden from everyday users. Open the app with **`?admin=1`** appended to the URL (e.g. `https://<owner>.github.io/<repo>/?admin=1`) and a **⚙ Admin settings** button appears in the header.
+
+> This hides complexity; it is **not** access control. The app is fully client-side, so anyone who knows the parameter can open the panel — and every setting is stored per-browser, so an admin's changes only affect their own browser.
+
+> Note: browser calls use Anthropic's `anthropic-dangerous-direct-browser-access` header. This is fine for a trusted internal tool where each teammate uses their own key, but the key is exposed to anything running in that browser tab — don't embed a shared org key in the page.
+
+## Hosting on GitHub Pages
+
+This is a fully static site (no build step). To publish:
+
+1. Push this branch to GitHub (already done if you're reading this in the repo).
+2. In the repo, go to **Settings → Pages**.
+3. Under **Build and deployment → Source**, choose **Deploy from a branch**.
+4. Select this branch (`claude/explanation-quality-webapp-yx5ww6`) — or merge it into `main` first — and folder **/ (root)**. Save.
+5. After a minute the app is live at `https://<owner>.github.io/<repo>/`. Share that link with your module teams.
+
+No server, database, or secrets are required.
+
+## Files
+
+```
+index.html          # markup
+assets/styles.css    # theme-aware styling (light/dark)
+assets/app.js        # heuristics, AI review, parsing, rendering
+```
+
+## Development
+
+Just open `index.html` in a browser, or serve the folder:
+
+```sh
+python3 -m http.server 8000    # then visit http://localhost:8000
+```
