@@ -13,7 +13,7 @@ Your job is the SEMANTIC judgment that automated checks can't make. Simple mecha
 1. Reasoning — does the explanation explain WHY the answer is correct, connecting it to the underlying concept or mechanism? Or does it merely assert/restate the answer?
 2. Conceptual grounding — would a learner who got this wrong understand the idea well enough to handle a similar problem next time?
 3. Factual soundness — when a "Correct answer" is given for an item, verify the explanation's reasoning genuinely supports THAT answer and is factually sound; an explanation that argues for a different answer, or supports the keyed answer with wrong reasoning, is INSUFFICIENT. When no keyed answer is given, solve the problem yourself from the question and options and check the explanation argues for the correct result.
-4. Distractor coverage — for multiple-choice items, does it generally explain why the incorrect options are incorrect? (Skipping a trivially wrong option is fine; ignoring the distractors entirely is not.)
+4. Distractor coverage — for multiple-choice items, does it generally explain why the incorrect options are incorrect, addressing any misconceptions learners may have — the misunderstanding that makes each wrong option tempting? (Skipping a trivially wrong option is fine; ignoring distractors entirely is not.)
 
 Note: Learners have access to a chat companion for follow-up questions, so an explanation need not cover every edge case — it must give a correct, solid foundation.
 
@@ -37,7 +37,7 @@ A great explanation:
 - Explains WHY the correct answer is correct, naming the underlying concept or mechanism — never just restates the answer.
 - Gives real reasoning ("because", "since", "therefore"), not a bare assertion.
 - Has substance — more than one sentence, but stays focused and readable.
-- For multiple-choice items, briefly says why the main incorrect options are wrong.
+- For multiple-choice items, briefly says why the main incorrect options are wrong — addressing any misconceptions learners may have, i.e. the misunderstanding that would lead someone to pick each wrong option.
 - Refers to options by their CONTENT, never by position or label ("Option 1", "the first choice", "B") — options may be shuffled when displayed.
 - Uses plain, learner-friendly language. Preserve any LaTeX/MathJax notation.
 
@@ -51,7 +51,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
     length:            { label: "Substantive length",       weight: 12, tip: "An explanation should be more than one sentence — a single sentence rarely explains a concept. Add reasoning and context." },
     reasoning:         { label: "Shows reasoning",          weight: 20, tip: "Explain WHY the answer is correct — use words like 'because', 'since', 'therefore'. Don't just assert." },
     notRestatement:    { label: "Not just a restatement",   weight: 13, tip: "The explanation repeats the question/answer instead of adding reasoning. Add the underlying concept." },
-    addressesIncorrect:{ label: "Addresses wrong options",  weight: 15, tip: "For multiple-choice items, generally explain why the incorrect options are incorrect — not just why the right one is right." },
+    addressesIncorrect:{ label: "Addresses wrong options",  weight: 15, tip: "For multiple-choice items, generally explain why the incorrect options are incorrect — addressing any misconceptions learners may have, not just stating that the other options are wrong." },
     noPositional:      { label: "No positional labels",     weight: 10, tip: "Don't refer to options as 'Option 1', 'the first option', 'choice B', etc. — options may be shuffled when displayed. Refer to options by their content." },
     notTruncated:      { label: "Not cut off",              weight:  3, tip: "The text looks clipped mid-sentence. Check for truncated or unfinished content." },
   };
@@ -82,6 +82,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   const STALE_GRADE_MARKERS = [
     /Is it substantive — more than ONE sentence\?/,                                   // pre-rewrite "QA checker"
     /Factual soundness — work the problem yourself from the question and options\./, // pre-answer-key "QA reviewer"
+    /explain why the incorrect options are incorrect\? \(Skipping/,                   // pre-misconception wording
   ];
   let aiPrompt = localStorage.getItem(LS.prompt) || DEFAULT_AI_PROMPT;
   if (/^You are a QA (checker|reviewer) for an online course/.test(aiPrompt) &&
@@ -91,6 +92,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   const STALE_SUGGEST_MARKERS = [
     /Work out the correct answer yourself from the question and options\. Reply with ONLY/, // original
     /If they agree, explain that answer\./,                                                 // pre-answer-key
+    /briefly says why the main incorrect options are wrong\./,                              // pre-misconception wording
   ];
   let suggestPrompt = localStorage.getItem(LS.suggestPrompt) || DEFAULT_SUGGEST_PROMPT;
   if (suggestPrompt.startsWith("You are an expert instructional writer for an online course.") &&
