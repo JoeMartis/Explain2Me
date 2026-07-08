@@ -32,11 +32,18 @@ Both the heuristic rubric (weights + thresholds) and the AI prompts (grading + "
 
 ### AI review setup
 
-Paste an Anthropic API key into the **🔑 API key** box on the main page. The key is stored **only in your browser's localStorage** and is sent **directly to `api.anthropic.com`** — it never touches any intermediary server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
+Paste an API key into the **🔑 API key** box on the main page. Two kinds of key work out of the box:
+
+- **Anthropic keys** (`sk-ant-…`) — requests go directly to `api.anthropic.com`.
+- **MIT Parley keys** (`sk-parley-…`, issued by MIT IT) — requests route automatically to the `https://parley.mit.edu` gateway.
+
+Routing is detected from the key prefix; a different Anthropic-compatible gateway can be set via the **API base URL override** in the admin panel. The key is stored **only in your browser's localStorage** and is sent only to the API endpoint it belongs to — never to any other server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
+
+> Note: browser-based calls require the gateway to allow cross-origin (CORS) requests from the page's domain. `api.anthropic.com` supports this; if AI review fails against `parley.mit.edu` with a network/CORS error while the same key works in a terminal, ask IT to allow browser CORS for the GitHub Pages origin.
 
 ### Admin settings
 
-The tuning knobs — model choice, AI on/off, rubric weights and word threshold, and the AI grading prompt — live in an admin panel that is hidden from everyday users. Open the app with **`?admin=1`** appended to the URL (e.g. `https://<owner>.github.io/<repo>/?admin=1`) and a **⚙ Admin settings** button appears in the header.
+The tuning knobs — model choice, AI on/off, API base URL override, rubric weights and word threshold, and the AI prompts — live in an admin panel that is hidden from everyday users. Open the app with **`?admin=1`** appended to the URL (e.g. `https://<owner>.github.io/<repo>/?admin=1`) and a **⚙ Admin settings** button appears in the header.
 
 > This hides complexity; it is **not** access control. The app is fully client-side, so anyone who knows the parameter can open the panel — and every setting is stored per-browser, so an admin's changes only affect their own browser.
 

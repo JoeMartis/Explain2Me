@@ -42,6 +42,11 @@
             <input type="checkbox" id="aiEnabled" checked />
           </label>
         </div>
+        <label class="field">
+          <span>API base URL override <span class="muted">(optional)</span></span>
+          <input type="text" id="baseUrl" placeholder="auto — sk-parley-… → parley.mit.edu, sk-ant-… → api.anthropic.com" autocomplete="off" spellcheck="false" />
+        </label>
+        <p class="muted small">Leave blank to route by key prefix. Set only if your institution uses a different Anthropic-compatible gateway.</p>
       </div>
 
       <div class="card">
@@ -165,11 +170,11 @@
     <!-- API key (surfaced) -->
     <div class="key-bar" id="keyBar">
       <div class="key-bar-text">
-        <b>🔑 Anthropic API key</b>
-        <span class="muted small">Optional — enables the AI review of each explanation. Stored only in this browser and sent directly to Anthropic; without it, offline checks still run.</span>
+        <b>🔑 API key</b>
+        <span class="muted small">Optional — enables the AI review. Anthropic keys (<code>sk-ant-…</code>) and MIT Parley keys (<code>sk-parley-…</code>) both work; requests route to the right endpoint automatically. Stored only in this browser; without a key, offline checks still run.</span>
       </div>
       <div class="key-bar-controls">
-        <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" aria-label="Anthropic API key" />
+        <input type="password" id="apiKey" placeholder="sk-ant-... or sk-parley-..." autocomplete="off" spellcheck="false" aria-label="API key" />
         <button id="forgetKey" class="btn ghost small" title="Remove the key from this browser">Forget</button>
       </div>
     </div>

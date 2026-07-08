@@ -64,8 +64,18 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   const LS = {
     key: "e2m_api_key", model: "e2m_model", ai: "e2m_ai_enabled",
     rubric: "e2m_rubric", prompt: "e2m_ai_prompt", suggestPrompt: "e2m_suggest_prompt",
-    guide: "e2m_guide_open",
+    guide: "e2m_guide_open", baseUrl: "e2m_base_url",
   };
+
+  // Route requests by key prefix: MIT Parley gateway keys (sk-parley-...) go to
+  // parley.mit.edu, Anthropic keys (sk-ant-...) to api.anthropic.com. An admin
+  // override (settings panel) wins over the auto-detection.
+  function apiBaseUrl(apiKey) {
+    const override = (localStorage.getItem(LS.baseUrl) || "").trim().replace(/\/+$/, "");
+    if (override) return override;
+    if (/^sk-parley-/.test(apiKey)) return "https://parley.mit.edu";
+    return "https://api.anthropic.com";
+  }
 
   // ---------- State ----------
   // Admin mode reveals the settings panel (rubric, model, AI prompt).
@@ -238,14 +248,18 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   }
 
   async function callClaude({ apiKey, model, system, userContent, maxTokens }) {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const base = apiBaseUrl(apiKey);
+    const headers = {
+      "content-type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+    };
+    // Anthropic requires this opt-in for browser calls; gateways may not
+    // allowlist the header in CORS, so only send it where it's needed.
+    if (base === "https://api.anthropic.com") headers["anthropic-dangerous-direct-browser-access"] = "true";
+    const res = await fetch(`${base}/v1/messages`, {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "anthropic-dangerous-direct-browser-access": "true",
-      },
+      headers,
       body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: "user", content: userContent }] }),
     });
     if (!res.ok) {
@@ -631,6 +645,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   // ---------- Wiring ----------
   function initSettings() {
     $("apiKey").value = localStorage.getItem(LS.key) || "";
+    $("baseUrl").value = localStorage.getItem(LS.baseUrl) || "";
     $("model").value = localStorage.getItem(LS.model) || "claude-haiku-4-5-20251001";
     $("aiEnabled").checked = localStorage.getItem(LS.ai) !== "false";
     $("aiPrompt").value = aiPrompt;
@@ -644,6 +659,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
     ).join("");
 
     $("apiKey").addEventListener("change", () => localStorage.setItem(LS.key, $("apiKey").value.trim()));
+    $("baseUrl").addEventListener("change", () => localStorage.setItem(LS.baseUrl, $("baseUrl").value.trim()));
     $("model").addEventListener("change", () => localStorage.setItem(LS.model, $("model").value));
     $("aiEnabled").addEventListener("change", () => localStorage.setItem(LS.ai, $("aiEnabled").checked));
     $("minWords").addEventListener("input", () => {
