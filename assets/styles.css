@@ -127,6 +127,8 @@ main.wrap { padding-top: 24px; padding-bottom: 40px; }
 .guide-body p:first-child { margin-top: 16px; }
 .guide-criteria { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 6px; }
 .guide-criteria li { font-size: .9rem; }
+.guide-steps { margin: 12px 0 0; padding-left: 22px; display: grid; gap: 6px; }
+.guide-steps li { font-size: .9rem; }
 .ex-list { display: grid; gap: 22px; }
 .ex-item { display: grid; gap: 8px; }
 .ex-q { font-weight: 700; font-size: .96rem; margin: 0 0 2px; }

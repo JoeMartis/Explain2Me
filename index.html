@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Explainiac — Explanation Quality Checker</title>
-  <meta name="description" content="Score the quality of problem explanations against a rubric. Offline heuristics plus optional AI review. Built for module teams." />
+  <title>Explainiac — Explanation Feedback</title>
+  <meta name="description" content="Instant rubric and AI feedback on problem explanations, with example rewrites. Built for module teams." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A1%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -15,7 +15,7 @@
         <span class="brand-mark" aria-hidden="true">💡</span>
         <div>
           <h1>Explain<span class="accent">iac</span></h1>
-          <p class="tagline">Explanation quality checker for problem sets</p>
+          <p class="tagline">Instant feedback on problem explanations</p>
         </div>
       </div>
       <button id="settingsToggle" class="btn ghost" aria-expanded="false" aria-controls="settingsPanel" hidden>⚙ Admin settings</button>
@@ -42,6 +42,11 @@
             <input type="checkbox" id="aiEnabled" checked />
           </label>
         </div>
+        <label class="field">
+          <span>API base URL override <span class="muted">(optional)</span></span>
+          <input type="text" id="baseUrl" placeholder="auto — sk-parley-… → parley.mit.edu, sk-ant-… → api.anthropic.com" autocomplete="off" spellcheck="false" />
+        </label>
+        <p class="muted small">Leave blank to route by key prefix. Set only if your institution uses a different Anthropic-compatible gateway.</p>
       </div>
 
       <div class="card">
@@ -73,21 +78,21 @@
 
   <main class="wrap">
     <!-- Guidance -->
-    <details class="guide" id="guide">
+    <details class="guide" id="guide" open>
       <summary>
-        <span class="guide-title">📘 What makes a good explanation?</span>
-        <span class="guide-hint">Guidance &amp; examples — click to expand</span>
+        <span class="guide-title">📘 What makes an explanation great?</span>
+        <span class="guide-hint">The criteria, worked examples, and a suggested workflow</span>
       </summary>
       <div class="guide-body">
-        <p class="muted">A strong explanation doesn't just tell the learner the answer — it teaches the concept behind it. This tool scores explanations against the criteria below. Learners have a chat companion for follow-ups, so an explanation needn't cover every edge case, but it must give a solid foundation.</p>
+        <p class="muted">A strong explanation doesn't just tell the learner the answer — it teaches the concept behind it. This tool gives instant feedback against the criteria below, so an explanation can be revised and re-checked until it's strong. Learners have a chat companion for follow-ups, so an explanation needn't cover every edge case, but it must give a solid foundation.</p>
         <ul class="guide-criteria">
           <li><b>Explains <em>why</em>, not just <em>what</em></b> — give the reason the answer is correct, don't just assert it.</li>
           <li><b>Provides reasoning or conceptual context</b> — connect the answer to the underlying principle.</li>
           <li><b>Is substantive</b> — an explanation should be <em>more than one sentence</em>; a single sentence rarely teaches the concept.</li>
           <li><b>Adds something new</b> — doesn't merely restate the question or repeat the correct option.</li>
-          <li><b>Addresses the wrong options</b> — for multiple-choice items, generally explain <em>why the incorrect answers are incorrect</em>, not just why the right one is right.</li>
+          <li><b>Addresses the wrong options</b> — for multiple-choice items, generally explain <em>why the incorrect answers are incorrect</em>, not just why the right one is right. In particular, address any <em>misconceptions</em> learners may have — the misunderstanding that makes each wrong option tempting.</li>
           <li><b>Names options by content, not position</b> — never say “Option 1”, “the first option”, or “choice B”. Answer options may be <em>shuffled</em> when displayed, so a positional reference can point at the wrong answer.</li>
-          <li><b>Is complete and clean</b> — not cut off mid-sentence, free of copy-paste artifacts.</li>
+          <li><b>Is complete</b> — not cut off mid-sentence.</li>
         </ul>
 
         <h4>Examples — a weak explanation and its stronger rewrite</h4>
@@ -151,18 +156,25 @@
           </div>
 
         </div>
-        <p class="muted small">Tip: paste any of these into the checker below to see how it scores.</p>
+        <h4>Suggested workflow</h4>
+        <ol class="guide-steps">
+          <li>Paste an item below — question, options, correct answer, and the draft explanation.</li>
+          <li>Review the feedback: the rubric checklist shows which criteria the explanation hits and misses.</li>
+          <li>Revise and re-check until it's strong.</li>
+          <li>Want a comparison point? <b>✨ Make it better</b> generates an example rewrite to weigh against the draft.</li>
+        </ol>
+        <p class="muted small">Tip: paste any of the examples above into the checker to see how it scores.</p>
       </div>
     </details>
 
     <!-- API key (surfaced) -->
     <div class="key-bar" id="keyBar">
       <div class="key-bar-text">
-        <b>🔑 Anthropic API key</b>
-        <span class="muted small">Optional — enables the AI review of each explanation. Stored only in this browser and sent directly to Anthropic; without it, offline checks still run.</span>
+        <b>🔑 API key</b>
+        <span class="muted small">Optional — enables the AI review. Anthropic keys (<code>sk-ant-…</code>) and MIT Parley keys (<code>sk-parley-…</code>) both work; requests route to the right endpoint automatically. Stored only in this browser; without a key, offline checks still run.</span>
       </div>
       <div class="key-bar-controls">
-        <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" aria-label="Anthropic API key" />
+        <input type="password" id="apiKey" placeholder="sk-ant-... or sk-parley-..." autocomplete="off" spellcheck="false" aria-label="API key" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other" />
         <button id="forgetKey" class="btn ghost small" title="Remove the key from this browser">Forget</button>
       </div>
     </div>
@@ -182,11 +194,16 @@
         </label>
         <p class="muted small field-help">Include the options so the checker can tell whether the explanation covers the wrong answers and avoids positional labels.</p>
         <label class="field">
+          <span>Correct answer <span class="muted">(recommended)</span></span>
+          <input type="text" id="ans" placeholder="e.g. Hash table — the option's content, not its position" autocomplete="off" />
+        </label>
+        <p class="muted small field-help">When provided, the AI verifies the explanation actually supports this answer instead of working the problem out itself.</p>
+        <label class="field">
           <span>Explanation <span class="req">*</span></span>
           <textarea id="e" rows="6" placeholder="Paste the worked explanation / solution rationale here…"></textarea>
         </label>
         <div class="row gap">
-          <button id="checkSingle" class="btn primary">Check quality</button>
+          <button id="checkSingle" class="btn primary">Get feedback</button>
           <button id="loadSample" class="btn ghost">Load an example</button>
           <span id="singleStatus" class="status" aria-live="polite"></span>
         </div>
@@ -197,7 +214,7 @@
     <!-- BATCH MODE -->
     <section id="batchMode" class="mode" hidden>
       <div class="input-card">
-        <p class="muted small">Provide many explanations at once. Upload a <b>CSV</b> or <b>JSON</b> file, or paste rows below. Recognised columns: <code>id</code>, <code>question</code>, <code>options</code>, <code>explanation</code>. Include the <code>question</code> and its <code>options</code> so the wrong-answer and positional-label checks work; in JSON, <code>options</code> can be an array of choices.</p>
+        <p class="muted small">Provide many explanations at once. Upload a <b>CSV</b> or <b>JSON</b> file, or paste rows below. Recognised columns: <code>id</code>, <code>question</code>, <code>options</code>, <code>answer</code>, <code>explanation</code>. Include the <code>question</code> and its <code>options</code> so the wrong-answer and positional-label checks work, and the keyed <code>answer</code> so the AI verifies against it instead of solving the problem itself; in JSON, <code>options</code> can be an array of choices.</p>
         <div class="row gap wrap-row">
           <label class="btn ghost file-btn">
             📁 Upload CSV / JSON
@@ -208,7 +225,7 @@
         </div>
         <label class="field">
           <span>…or paste CSV / TSV / JSON</span>
-          <textarea id="batchInput" rows="6" spellcheck="false" placeholder="id,question,options,explanation&#10;1,&quot;Which is prime?&quot;,&quot;A) 4 B) 9 C) 7&quot;,&quot;7 is prime because its only divisors are 1 and itself; 4 and 9 both factor (2×2 and 3×3).&quot;"></textarea>
+          <textarea id="batchInput" rows="6" spellcheck="false" placeholder="id,question,options,answer,explanation&#10;1,&quot;Which is prime?&quot;,&quot;A) 4 B) 9 C) 7&quot;,&quot;7&quot;,&quot;7 is prime because its only divisors are 1 and itself; 4 and 9 both factor (2×2 and 3×3).&quot;"></textarea>
         </label>
         <div class="row gap">
           <button id="runBatch" class="btn primary">Run checks</button>
