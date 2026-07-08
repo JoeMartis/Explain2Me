@@ -257,17 +257,34 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
     // Anthropic requires this opt-in for browser calls; gateways may not
     // allowlist the header in CORS, so only send it where it's needed.
     if (base === "https://api.anthropic.com") headers["anthropic-dangerous-direct-browser-access"] = "true";
-    const res = await fetch(`${base}/v1/messages`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: "user", content: userContent }] }),
-    });
+    const endpoint = `${base}/v1/messages`;
+    let res;
+    try {
+      res = await fetch(endpoint, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: "user", content: userContent }] }),
+      });
+    } catch (err) {
+      // fetch() itself rejecting means the request never completed — usually
+      // CORS (the gateway didn't allow this page's origin) or network/DNS.
+      throw new Error(`could not reach ${endpoint} — the browser blocked or failed the request (often CORS: the endpoint must allow requests from ${location.origin}). Original error: ${err.message}`);
+    }
+    const raw = await res.text();
+    let data = null;
+    try { data = JSON.parse(raw); } catch (_) {}
+    if (!data) {
+      // Got a response, but not JSON — we reached a web page, not the API.
+      const title = (raw.match(/<title[^>]*>\s*([^<]+?)\s*<\/title>/i) || [])[1];
+      const redirected = res.url && res.url !== endpoint ? ` after being redirected to ${res.url}` : "";
+      throw new Error(`the endpoint returned ${res.status} ${res.headers.get("content-type") || "unknown type"} instead of JSON${redirected}${title ? ` (page title: “${title}”)` : ""}. The request reached a web page, not the API — likely a login/SSO redirect or a wrong API path. Check the base URL, or ask IT for the gateway's exact API endpoint and whether browser (CORS) access from ${location.origin} is enabled.`);
+    }
     if (!res.ok) {
       let msg = `HTTP ${res.status}`;
-      try { const j = await res.json(); if (j.error?.message) msg += ` — ${j.error.message}`; } catch (_) {}
+      if (data.error?.message) msg += ` — ${data.error.message}`;
+      else if (data.message) msg += ` — ${data.message}`;
       throw new Error(msg);
     }
-    const data = await res.json();
     const block = (data.content || []).find(b => b.type === "text");
     return block ? block.text : "";
   }
@@ -397,7 +414,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
     } else if (aiStatus === "failed") {
       state = "bad";
       pill = `<span class="pill bad">Failed</span>`;
-      body = `<p class="muted small">AI review couldn't run: ${escapeHtml(failMsg || "unknown error")}. Heuristic checks above are unaffected.</p>`;
+      body = `<p class="muted small">AI review couldn't run: ${escapeHtml((failMsg || "unknown error").replace(/\.\s*$/, ""))}. Heuristic checks above are unaffected.</p>`;
     } else {
       state = "off";
       pill = `<span class="pill na">Not run</span>`;
