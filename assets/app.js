@@ -67,14 +67,11 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
     guide: "e2m_guide_open", baseUrl: "e2m_base_url",
   };
 
-  // Route requests by key prefix: MIT Parley gateway keys (sk-parley-...) go to
-  // parley.mit.edu, Anthropic keys (sk-ant-...) to api.anthropic.com. An admin
-  // override (settings panel) wins over the auto-detection.
-  function apiBaseUrl(apiKey) {
+  // Requests go to Anthropic by default; an admin base-URL override (settings
+  // panel) points them at an Anthropic-compatible gateway instead.
+  function apiBaseUrl() {
     const override = (localStorage.getItem(LS.baseUrl) || "").trim().replace(/\/+$/, "");
-    if (override) return override;
-    if (/^sk-parley-/.test(apiKey)) return "https://parley.mit.edu";
-    return "https://api.anthropic.com";
+    return override || "https://api.anthropic.com";
   }
 
   // ---------- State ----------
@@ -248,7 +245,7 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
   }
 
   async function callClaude({ apiKey, model, system, userContent, maxTokens }) {
-    const base = apiBaseUrl(apiKey);
+    const base = apiBaseUrl();
     const headers = {
       "content-type": "application/json",
       "x-api-key": apiKey,

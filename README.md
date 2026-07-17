@@ -32,14 +32,9 @@ Both the heuristic rubric (weights + thresholds) and the AI prompts (grading + "
 
 ### AI review setup
 
-Paste an API key into the **🔑 API key** box on the main page. Two kinds of key work out of the box:
+Paste an Anthropic API key (`sk-ant-…`) into the **🔑 API key** box on the main page. Requests go directly to `api.anthropic.com`. The key is stored **only in your browser's localStorage** and is sent only to Anthropic — never to any other server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
 
-- **Anthropic keys** (`sk-ant-…`) — requests go directly to `api.anthropic.com`.
-- **MIT Parley keys** (`sk-parley-…`, issued by MIT IT) — requests route automatically to the `https://parley.mit.edu` gateway.
-
-Routing is detected from the key prefix; a different Anthropic-compatible gateway can be set via the **API base URL override** in the admin panel. The key is stored **only in your browser's localStorage** and is sent only to the API endpoint it belongs to — never to any other server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
-
-> Note: browser-based calls require the gateway to allow cross-origin (CORS) requests from the page's domain. `api.anthropic.com` supports this; if AI review fails against `parley.mit.edu` with a network/CORS error while the same key works in a terminal, ask IT to allow browser CORS for the GitHub Pages origin.
+> Routing through an Anthropic-compatible gateway is possible via the **API base URL override** in the admin panel, but the gateway must serve the `/v1/messages` API to cross-origin browser requests and allow CORS from the page's origin — many gateways don't, so test before relying on it.
 
 ### Admin settings
 
