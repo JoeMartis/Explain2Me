@@ -32,14 +32,14 @@ Both the heuristic rubric (weights + thresholds) and the AI prompts (grading + "
 
 ### AI review setup
 
-Paste an API key into the **🔑 API key** box on the main page. Two kinds of key work out of the box:
+Paste an API key into the **🔑 API key** box on the main page. Two kinds work out of the box, routed automatically by key prefix:
 
-- **Anthropic keys** (`sk-ant-…`) — requests go directly to `api.anthropic.com`.
-- **MIT Parley keys** (`sk-parley-…`, issued by MIT IT) — requests route automatically to the `https://parley.mit.edu` gateway.
+- **Anthropic keys** (`sk-ant-…`) — requests go to `api.anthropic.com`.
+- **MIT Parley keys** (`sk-parley-…`) — requests go to the `https://parley.api.mit.edu` gateway.
 
-Routing is detected from the key prefix; a different Anthropic-compatible gateway can be set via the **API base URL override** in the admin panel. The key is stored **only in your browser's localStorage** and is sent only to the API endpoint it belongs to — never to any other server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
+A different Anthropic-compatible gateway can be set via the **API base URL override** in the admin panel. The key is stored **only in your browser's localStorage** and is sent only to the endpoint it belongs to — never to any other server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
 
-> Note: browser-based calls require the gateway to allow cross-origin (CORS) requests from the page's domain. `api.anthropic.com` supports this; if AI review fails against `parley.mit.edu` with a network/CORS error while the same key works in a terminal, ask IT to allow browser CORS for the GitHub Pages origin.
+> Note: browser calls require the endpoint to allow cross-origin (CORS) requests from the page's origin. `api.anthropic.com` does. If AI review fails against the Parley gateway with a network/CORS error while the same key works in a terminal, ask MIT IT to enable browser CORS for your GitHub Pages origin.
 
 ### Admin settings
 

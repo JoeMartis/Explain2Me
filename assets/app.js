@@ -67,13 +67,14 @@ Reply with ONLY the improved explanation text — no preamble, no headings, no q
     guide: "e2m_guide_open", baseUrl: "e2m_base_url",
   };
 
-  // Route requests by key prefix: MIT Parley gateway keys (sk-parley-...) go to
-  // parley.mit.edu, Anthropic keys (sk-ant-...) to api.anthropic.com. An admin
-  // override (settings panel) wins over the auto-detection.
+  // Route by key prefix: MIT Parley gateway keys (sk-parley-...) go to the
+  // parley.api.mit.edu API host, Anthropic keys (sk-ant-...) to
+  // api.anthropic.com. An admin base-URL override (settings panel) wins over
+  // the auto-detection, for any other Anthropic-compatible gateway.
   function apiBaseUrl(apiKey) {
     const override = (localStorage.getItem(LS.baseUrl) || "").trim().replace(/\/+$/, "");
     if (override) return override;
-    if (/^sk-parley-/.test(apiKey)) return "https://parley.mit.edu";
+    if (/^sk-parley-/.test(apiKey)) return "https://parley.api.mit.edu";
     return "https://api.anthropic.com";
   }
 
