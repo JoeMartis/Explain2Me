@@ -35,7 +35,7 @@ Both the heuristic rubric (weights + thresholds) and the AI prompts (grading + "
 Paste an API key into the **🔑 API key** box on the main page. Two kinds work out of the box, routed automatically by key prefix:
 
 - **Anthropic keys** (`sk-ant-…`) — requests go to `api.anthropic.com`.
-- **MIT Parley keys** (`sk-parley-…`) — requests go to the `https://parley.api.mit.edu` gateway.
+- **MIT Parley keys** (`sk-parley-…`) — requests go to the `https://parley.api.mit.edu` gateway. [How to get an MIT Parley API key](https://mit.service-now.com/esc?id=kb_article&sysparm_article=KB0034692) (MIT SSO).
 
 A different Anthropic-compatible gateway can be set via the **API base URL override** in the admin panel. The key is stored **only in your browser's localStorage** and is sent only to the endpoint it belongs to — never to any other server. Use **Forget** to clear it. Without a key, the offline heuristics still run.
 
